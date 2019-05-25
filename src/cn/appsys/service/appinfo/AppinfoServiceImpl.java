@@ -19,14 +19,15 @@ public class AppinfoServiceImpl implements AppinfoService{
 
 	@Override
 	public List<AppInfo> getAppInfoList(String softwareName, String status, Integer flatformId, String categoryLevel1,
-			String categoryLevel2, String categoryLevel3, String from, String pageSize) {
+			String categoryLevel2, String categoryLevel3, Integer from, Integer pageSize) {
 		return appinfoMapper.getAppInfoList(softwareName, status, flatformId, categoryLevel1, 
 				                            categoryLevel2, categoryLevel3, from, pageSize);
 	}
 
 	@Override
-	public int getAppInfoCount() {
-		return appinfoMapper.getAppInfoCount();
+	public int getAppInfoCount(String softwareName, String status, Integer flatformId, String categoryLevel1,
+			String categoryLevel2, String categoryLevel3) {
+		return appinfoMapper.getAppInfoCount(softwareName, status, flatformId, categoryLevel1, categoryLevel2, categoryLevel3);
 	}
 
 }

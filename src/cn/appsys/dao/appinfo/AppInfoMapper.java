@@ -26,13 +26,18 @@ public interface AppInfoMapper {
 			                            @Param("categoryLevel1")String categoryLevel1,
 			                            @Param("categoryLevel2")String categoryLevel2,
 			                            @Param("categoryLevel3")String categoryLevel3,
-			                            @Param("from")String from,
-			                            @Param("pageSize")String pageSize);
+			                            @Param("from")Integer from,
+			                            @Param("pageSize")Integer pageSize);
 	
 	/**
-	 * 记录总数量
+	 * 根据查询条件记录总数量
 	 * @return
 	 */
-	public int getAppInfoCount();
+	public int getAppInfoCount(@Param("softwareName")String softwareName,
+                               @Param("status")String status,
+                               @Param("flatformId")Integer flatformId,
+                               @Param("categoryLevel1")String categoryLevel1,
+                               @Param("categoryLevel2")String categoryLevel2,
+                               @Param("categoryLevel3")String categoryLevel3);
 
 }
