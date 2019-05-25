@@ -1,4 +1,4 @@
-package cn.appsys.dao.appinfo;
+package cn.appsys.service.appinfo;
 
 import java.util.List;
 
@@ -6,8 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import cn.appsys.pojo.AppInfo;
 
-public interface AppInfoMapper {
-	
+public interface AppinfoService {
 	/**
 	 * 根据条件查询并分页
 	 * @param softwareName
@@ -34,5 +33,4 @@ public interface AppInfoMapper {
 	 * @return
 	 */
 	public int getAppInfoCount();
-
 }
