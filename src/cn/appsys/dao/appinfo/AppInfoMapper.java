@@ -21,7 +21,7 @@ public interface AppInfoMapper {
 	 * @return
 	 */
 	public List<AppInfo> getAppInfoList(@Param("softwareName")String softwareName,
-			                            @Param("status")String status,
+			                            @Param("status")Integer status,
 			                            @Param("flatformId")Integer flatformId,
 			                            @Param("categoryLevel1")String categoryLevel1,
 			                            @Param("categoryLevel2")String categoryLevel2,
@@ -34,7 +34,7 @@ public interface AppInfoMapper {
 	 * @return
 	 */
 	public int getAppInfoCount(@Param("softwareName")String softwareName,
-                               @Param("status")String status,
+                               @Param("status")Integer status,
                                @Param("flatformId")Integer flatformId,
                                @Param("categoryLevel1")String categoryLevel1,
                                @Param("categoryLevel2")String categoryLevel2,

@@ -21,7 +21,7 @@ public class BackendUserController {
 
 	@RequestMapping("/login")
 	public String login() {
-		return "backendlogin";
+		return "/backendlogin";
 	}
 
 	@RequestMapping("/doLogin")
