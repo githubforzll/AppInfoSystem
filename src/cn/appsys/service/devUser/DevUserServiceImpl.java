@@ -10,7 +10,7 @@ import cn.appsys.pojo.DevUser;
 
 @Transactional
 @Service("devUserService")
-public class DevUserServiceImpl implements DevUserService {
+public class DevUserServiceImpl implements DevUserService{
 	@Resource
 	private DevUserMapper devUserMapper;
 
@@ -18,5 +18,5 @@ public class DevUserServiceImpl implements DevUserService {
 	public DevUser queryDevUserByConditions(String devCode, String devPassword) {
 		return devUserMapper.queryDevUserByConditions(devCode, devPassword);
 	}
-	
+
 }

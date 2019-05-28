@@ -8,13 +8,13 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					APP 审核列表 <i class="fa fa-user"></i><small>${userSession.userName}
+					APP 审核列表 <i class="fa fa-user"></i><small>${backendUserSession.userName}
 						- 您可以通过搜索或者其他的筛选项对APP的信息进行审核操作。^_^</small>
 				</h2>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form method="post" action="list">
+				<form method="post" action="${pageContext.request.contextPath }/backend/app/list">
 					<input type="hidden" name="pageIndex" value="1" />
 			    <ul>
 					<li>
@@ -170,7 +170,7 @@
 										<button type="button" class="btn btn-default checkApp" 
 											appinfoid="${appInfo.id }" versionid="${appInfo.versionId }" status="${appInfo.status }" 
 											statusname="${appInfo.statusName }"											
-											data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP">审核</button>
+											data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP" id="back">审核</button>
 										</td>
 									</tr>
 								</c:forEach>
