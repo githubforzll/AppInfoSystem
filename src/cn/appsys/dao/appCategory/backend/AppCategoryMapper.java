@@ -1,4 +1,4 @@
-package cn.appsys.service.appCategory;
+package cn.appsys.dao.appCategory.backend;
 
 import java.util.List;
 
@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Param;
 
 import cn.appsys.pojo.AppCategory;
 
-public interface AppCategoryService {
+
+public interface AppCategoryMapper {
+	
 	/**
 	 * 查询父级分类
 	 * @param parentId

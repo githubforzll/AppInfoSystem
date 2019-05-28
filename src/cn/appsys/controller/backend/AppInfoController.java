@@ -1,26 +1,38 @@
 package cn.appsys.controller.backend;
 
+import java.math.BigDecimal;
+import java.text.Bidi;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONArray;
 
 import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
+import cn.appsys.pojo.AppVersion;
 import cn.appsys.pojo.DataDictionary;
-import cn.appsys.service.appCategory.AppCategoryService;
-import cn.appsys.service.appinfo.AppinfoService;
-import cn.appsys.service.dataDictionary.DataDictionaryService;
+import cn.appsys.service.appCategory.backend.AppCategoryService;
+import cn.appsys.service.appVersion.backend.AppVersionService;
+import cn.appsys.service.appinfo.backend.AppinfoService;
+import cn.appsys.service.dataDictionary.backend.DataDictionaryService;
 import cn.appsys.tools.Constants;
 import cn.appsys.tools.PageSupport;
 
 @Controller
 @RequestMapping("/backend/app")
 public class AppInfoController {
+	private Logger logeger=Logger.getLogger(AppInfoController.class);
 
 	@Resource(name="appinfoService")
 	private AppinfoService appinfoService;
@@ -31,44 +43,113 @@ public class AppInfoController {
 	@Resource(name="appCategoryService")
 	private AppCategoryService appCategoryService;
 	
+	@Resource
+	private AppVersionService appVersionServie;
+	
 	@RequestMapping("/list")
-	public String applist(@RequestParam(value="softwareName",required = false)String softwareName,
-			              @RequestParam(value="status",required = false)Integer status,
-			              @RequestParam(value="flatformId", required = false)Integer flatformId,
-			              @RequestParam(value="categoryLevel1", required = false)String categoryLevel1,
-			              @RequestParam(value="categoryLevel2", required = false)String categoryLevel2,
-			              @RequestParam(value="categoryLevel3", required = false)String categoryLevel3,
-			              @RequestParam(value = "currPageNo", required = false,defaultValue = "1") Integer currPageNo,
+	public String applist(@RequestParam(value="querySoftwareName",required = false)String querySoftwareName,
+			              @RequestParam(value="queryStatus",required = false)Integer queryStatus,
+			              @RequestParam(value="queryFlatformId", required = false)Integer queryFlatformId,
+			              @RequestParam(value="queryCategoryLevel1", required = false)Integer queryCategoryLevel1,
+			              @RequestParam(value="queryCategoryLevel2", required = false)Integer queryCategoryLevel2,
+			              @RequestParam(value="queryCategoryLevel3", required = false)Integer queryCategoryLevel3,
+			              @RequestParam(value = "pageIndex", required = false) Integer pageIndex,
 			              Model model){
-		System.out.println("===================================list");
-		int totalCount = appinfoService.getAppInfoCount(softwareName, status, flatformId, categoryLevel1, categoryLevel2, categoryLevel3);
+		logeger.info("pageIndex--->>>"+pageIndex);
+		logeger.info("querySoftwareName--->>>"+querySoftwareName);
+		logeger.info("queryStatus--->>>"+queryStatus);
+		logeger.info("queryFlatformId--->>>"+queryFlatformId);
+		logeger.info("queryCategoryLevel1--->>>"+queryCategoryLevel1);
+		logeger.info("queryCategoryLevel2--->>>"+queryCategoryLevel2);
+		logeger.info("queryCategoryLevel3--->>>"+queryCategoryLevel3);
+		Integer currentPageNo=1;
+		
+		if(querySoftwareName==null){
+			querySoftwareName="";
+		}
+		if(pageIndex !=null){
+			currentPageNo=pageIndex;
+		}
+		
+		int totalCount = appinfoService.getAppInfoCount(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3);
 		PageSupport page = new PageSupport();
 		page.setPageSize(Constants.pageSize);  // 每页显示的数据行数
-		page.setCurrentPageNo(currPageNo);     // 当前页码
+		page.setCurrentPageNo(currentPageNo);     // 当前页码
 		page.setTotalCount(totalCount);        // 总的记录数 
 		// 3、计算分页SQL中的位置偏移量
 		Integer from = (page.getCurrentPageNo() - 1) * page.getPageSize();
 		// 4、调用分页、按条件查询用户列表方法
-		List<AppInfo> appInfoList = appinfoService.getAppInfoList(softwareName, 1, flatformId, categoryLevel1, categoryLevel2, categoryLevel3, from, page.getPageSize());
-		List<AppCategory> categoryLevel1List =appCategoryService.queryCategories(1);
-		List<AppCategory> categoryLevel2List =appCategoryService.queryCategories(2);
-		List<AppCategory> categoryLevel3List =appCategoryService.queryCategories(3);
+		List<AppInfo> appInfoList = appinfoService.getAppInfoList(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, from, page.getPageSize());
+		logeger.info("appInfoList.size--->>>"+appInfoList.size());
+		List<AppCategory> categoryLevel1List =appCategoryService.queryCategories(null);
+		logeger.info("categoryLevel1List.size--->>>"+categoryLevel1List.size());
+		List<AppCategory> categoryLevel2List =null;
+		List<AppCategory> categoryLevel3List =null;
 		List<DataDictionary> flatFormList =dataDictionaryService.queryFlatFormList();
 		
 		// 6、将相关数据保存到Model对象中，用于在页面上进行显示
-		model.addAttribute("softwareName", softwareName);
-		model.addAttribute("status",status);
-		model.addAttribute("flatformId",flatformId);
-		model.addAttribute("categoryLevel1",categoryLevel1);
-		model.addAttribute("categoryLevel2",categoryLevel2);
-		model.addAttribute("categoryLevel3",categoryLevel3);
+		model.addAttribute("softwareName", querySoftwareName);
+		model.addAttribute("status",queryStatus);
+		model.addAttribute("flatformId",queryFlatformId);
+		model.addAttribute("categoryLevel1",queryCategoryLevel1);
+		model.addAttribute("categoryLevel2",queryCategoryLevel2);
+		model.addAttribute("categoryLevel3",queryCategoryLevel3);
 		model.addAttribute("pages",page);
 		model.addAttribute("appInfoList", appInfoList);
 		model.addAttribute("categoryLevel1List", categoryLevel1List);
 		model.addAttribute("categoryLevel2List", categoryLevel2List);
 		model.addAttribute("categoryLevel3List", categoryLevel3List);
 		model.addAttribute("flatFormList", flatFormList);
-		return "/backend/applist";
+		return "backend/applist";
+	}
+	
+	/**
+	 * 根据上一级分类的选项获取下一级分类信息
+	 * @param pid
+	 * @return
+	 */
+	@RequestMapping(value="/categorylevellist.json",method=RequestMethod.GET)
+	@ResponseBody
+	public Object categoryLevelList(@RequestParam(value="pid",required=false)Integer pid){
+		List<AppCategory> list = appCategoryService.queryCategories(pid);
+		return JSONArray.toJSONString(list);
+	}
+	
+	/**
+	 * 审核
+	 * @param versionid
+	 * @param appinfoid
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/check",method=RequestMethod.GET)
+	public String check(@RequestParam(value="vid",required=false)Integer versionid,
+			            @RequestParam(value="aid",required=false)Integer appinfoid,
+			            Model model){
+		logeger.info("versionid--->>>"+versionid+"\nappinfoid--->>>"+appinfoid);
+		AppInfo appInfo = appinfoService.getAppInfoIdView(appinfoid);
+		AppVersion appVersion = appVersionServie.getVersionByView(versionid);
+		model.addAttribute("appInfo",appInfo);
+		model.addAttribute("appVersion", appVersion);
+		return "backend/appcheck";
+	} 
+	
+	/**
+	 * 保存审核内容
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="/checksave",method=RequestMethod.POST)
+	public String checksave(@RequestParam(value="id",required=false)Integer id,
+							@RequestParam(value="status",required=false)Integer status){
+		logeger.info("status====================>>>>>"+status);
+		logeger.info("id====================>>>>>"+id);
+		AppInfo appInfo=appinfoService.getAppInfoIdView(id);
+		appInfo.setStatus(status);
+		AppVersion appVersion=appVersionServie.getVersionByView(appInfo.getVersionId());
+		boolean result_modAppInfo=appinfoService.modifyAppInfoById(appInfo);
+		logeger.info("--->>>"+result_modAppInfo);
+		return "redirect:/backend/app/list";
 	}
 	
 }
