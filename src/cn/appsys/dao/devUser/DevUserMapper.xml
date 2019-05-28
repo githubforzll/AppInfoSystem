@@ -6,5 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 根据条件查询开发者用户 -->
 	<select id="queryDevUserByConditions" resultType="DevUser">
 		SELECT * FROM `dev_user` WHERE `devCode`=#{devCode} AND `devPassword`=#{devPassword}
-	</select>
+	</select>	
+	
 </mapper>

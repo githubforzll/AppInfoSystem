@@ -1,4 +1,4 @@
-package cn.appsys.controller;
+package cn.appsys.controller.developer;
 
 
 import java.io.IOException;
@@ -13,11 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import cn.appsys.pojo.DevUser;
 import cn.appsys.service.devUser.DevUserService;
 import cn.appsys.tools.Constants;
 
+/**
+ * 开发者用户控制器:
+ * 用于开发者用户的登录和注销
+ * @author zll
+ *
+ */
 @Controller
 @RequestMapping("/dev")
 public class DevUserController {
@@ -27,14 +32,8 @@ public class DevUserController {
 	private Logger logger=Logger.getLogger(DevUserController.class);
 	
 	
+
 	
-	
-	@RequestMapping("/flatform/app/list")
-	public String getDevUserList(HttpSession session,
-								@RequestParam(value="querySoftwareName",required=false)String querySoftwareName){
-		
-		return "";
-	}
 	
 	/**
 	 * 退出登录

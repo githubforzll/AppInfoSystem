@@ -106,11 +106,12 @@ $(function(){
 			dataType:"json",//ajax接口（请求url）返回的数据类型
 			success:function(data){//data：返回数据（json对象）
 				if(data.APKName == "empty"){//参数APKName为空，错误提示
-					alert("APKName为不能为空！");
+					$(this).next().html("APKName为不能为空!");
+					$(this).focus();
 				}else if(data.APKName == "exist"){//账号不可用，错误提示
-					alert("该APKName已存在，不能使用！");
+					$(this).next().html("该APKName已存在，不能使用！");
 				}else if(data.APKName == "noexist"){//账号可用，正确提示
-					alert("该APKName可以使用！");
+					$(this).next().html("该APKName可以使用！");
 				}
 			},
 			error:function(data){//当访问时候，404，500 等非200的错误状态码
@@ -118,8 +119,133 @@ $(function(){
 			}
 		});
 	});
+	
+	$("#softwareName").bind("blur",function(){
+		//后台验证--softwareName是否非空
+		var softwareName=$("#softwareName").val();
+		if(softwareName==null || softwareName==""){
+			$(this).next().html("软件名称不能为空!");
+			$(this).focus();
+		}else{
+			$(this).next().html("");
+		}
+	});
+	
+	$("#supportROM").bind("blur",function(){
+		//后台验证--supportROM是否非空
+		var supportROM=$("#supportROM").val();
+		if(supportROM==null || supportROM==""){
+			$(this).next().html("支持ROM不能为空!");
+			$(this).focus();
+		}else{
+			$(this).next().html("");
+		}
+	});
+	
+	$("#interfaceLanguage").bind("blur",function(){
+		//后台验证--interfaceLanguage是否非空
+		var interfaceLanguage=$("#interfaceLanguage").val();
+		if(interfaceLanguage==null || interfaceLanguage==""){
+			$(this).next().html("界面语言不能为空!");
+			$(this).focus();
+		}else{
+			$(this).next().html("");
+		}
+	});
+	
+	$("#softwareSize").bind("blur",function(){
+		//后台验证--softwareSize是否非空,为非数字
+		var softwareSize=$("#softwareSize").val();
+		if(softwareSize==null || softwareSize==""){
+			$(this).next().html("软件大小不能为空!");
+			$(this).focus();
+		}else if(softwareSize<=0){
+			$(this).next().html("软件大小不能小于0!");
+			$(this).focus().val(1);
+		}else{
+			$(this).next().html("");
+		}
+	});
+	
+	$("#downloads").bind("blur",function(){
+		//后台验证--downloads是否非空
+		var downloads=$("#downloads").val();
+		if(downloads==null || downloads==""){
+			$(this).next().html("下载次数不能为空!");
+		}else if(downloads<0){
+			$(this).next().html("下载次数不能小于0!");
+			$(this).focus().val(0);
+		}else{
+			$(this).next().html("");
+		}
+	});
+	
+	$("#flatformId").bind("blur",function(){
+		//后台验证--flatformId是否非空
+		var flatformId=$("#flatformId").val();
+		if(flatformId==null || flatformId==""){
+			$(this).next().html("请选择一个所属平台项!");
+			$(this).focus();
+		}else{
+			$(this).next().html("");
+		}
+	});
 
+	$("#categoryLevel1").bind("blur",function(){
+		//后台验证--categoryLevel1是否非空
+		var categoryLevel1=$("#categoryLevel1").val();
+		if(categoryLevel1==null || categoryLevel1==""){
+			$(this).next().html("请选择一个一级分类项!");
+			$(this).focus();
+		}else{
+			$(this).next().html("");
+		}
+	});
+
+	$("#categoryLevel2").bind("blur",function(){
+		//后台验证--categoryLevel2是否非空
+		var categoryLevel2=$("#categoryLevel2").val();
+		if(categoryLevel2==null || categoryLevel2==""){
+			$(this).next().html("请选择一个二级分类项!");
+			$(this).focus();
+		}else{
+			$(this).next().html("");
+		}
+	});
+
+	$("#categoryLevel3").bind("blur",function(){
+		//后台验证--categoryLevel3是否非空
+		var categoryLevel3=$("#categoryLevel3").val();
+		if(categoryLevel3==null || categoryLevel3==""){
+			$(this).next().html("请选择一个三级分类项!");
+			$(this).focus();
+		}else{
+			$(this).next().html("");
+		}
+	});
+
+	$("#appInfo").bind("blur",function(){
+		//后台验证--appInfo是否非空
+		var appInfo=$("#appInfo").val();
+		if(appInfo==null || appInfo==""){
+			$(this).next().html("应用简介不能为空!");
+			$(this).focus();
+		}else{
+			$(this).next().html("");
+		}
+	});
+
+	$("#a_logoPicPath").bind("blur",function(){
+		//后台验证--a_logoPicPath是否非空
+		var a_logoPicPath=$("#a_logoPicPath").val();
+		if(a_logoPicPath==null || a_logoPicPath==""){
+			$(this).next().html("LOGO图片不能为空,请选择一个上传图片!!");
+			$(this).focus();
+		}else{
+			$(this).next().html("");
+		}
+	});
+	
+	
 });
-      
-      
-      
+       
