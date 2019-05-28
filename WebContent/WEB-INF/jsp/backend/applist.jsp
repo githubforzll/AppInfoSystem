@@ -170,7 +170,7 @@
 										<button type="button" class="btn btn-default checkApp" 
 											appinfoid="${appInfo.id }" versionid="${appInfo.versionId }" status="${appInfo.status }" 
 											statusname="${appInfo.statusName }"											
-											data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP">审核</button>
+											data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP" id="back">审核</button>
 										</td>
 									</tr>
 								</c:forEach>

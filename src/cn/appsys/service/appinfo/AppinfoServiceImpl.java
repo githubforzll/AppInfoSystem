@@ -30,4 +30,9 @@ public class AppinfoServiceImpl implements AppinfoService{
 		return appinfoMapper.getAppInfoCount(softwareName, status, flatformId, categoryLevel1, categoryLevel2, categoryLevel3);
 	}
 
+	@Override
+	public AppInfo getVersionIdlist(Integer versionId) {
+		return appinfoMapper.getVersionIdlist(versionId);
+	}
+
 }

@@ -1,4 +1,4 @@
-package cn.appsys.controller;
+package cn.appsys.controller.backend;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -36,5 +36,11 @@ public class BackendUserController {
 		} else {
 			return "backendlogin";
 		}
+	}
+	
+	@RequestMapping("/logout")
+	public String close(){
+		
+		return "backendlogin";
 	}
 }

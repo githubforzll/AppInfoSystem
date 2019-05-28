@@ -1,7 +1,6 @@
 package cn.appsys.dao.backendUser;
 
 import org.apache.ibatis.annotations.Param;
-
 import cn.appsys.pojo.BackendUser;
 import cn.appsys.pojo.DataDictionary;
 
@@ -20,4 +19,5 @@ public interface BackendUserMapper {
 	 * @return
 	 */
 	public DataDictionary queryBackendUserBydictionary(@Param("userCode")String userCode);
+
 }

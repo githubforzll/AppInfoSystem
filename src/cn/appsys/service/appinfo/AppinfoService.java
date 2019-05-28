@@ -38,5 +38,12 @@ public interface AppinfoService {
                                @Param("categoryLevel1")String categoryLevel1,
                                @Param("categoryLevel2")String categoryLevel2,
                                @Param("categoryLevel3")String categoryLevel3);
+	
+	/**
+	 * 根据versionId来查看审核信息
+	 * @return
+	 */
+	public AppInfo getVersionIdlist(Integer versionId);
+
 
 }
