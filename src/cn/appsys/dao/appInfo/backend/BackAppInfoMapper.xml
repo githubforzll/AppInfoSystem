@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.appsys.dao.appInfo.backend.AppInfoMapper">
+<mapper namespace="cn.appsys.dao.appInfo.backend.BackAppInfoMapper">
 
 	<!-- 根据id修改app信息 -->
 	<update id="modifyAppInfoById" parameterType="AppInfo">

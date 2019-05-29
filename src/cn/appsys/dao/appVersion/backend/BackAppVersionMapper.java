@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 import cn.appsys.pojo.AppVersion;
 
-public interface AppVersionMapper {
+public interface BackAppVersionMapper {
 
 	/**
 	 * 根据id更新版本信息

@@ -7,19 +7,19 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.appsys.dao.dataDictionary.backend.DataDictionaryMapper;
+import cn.appsys.dao.dataDictionary.backend.BackDataDictionaryMapper;
 import cn.appsys.pojo.DataDictionary;
 
 @Transactional
-@Service("dataDictionaryService")
-public class DataDictionaryServiceImpl implements DataDictionaryService{
+@Service("backDataDictionaryService")
+public class BackDataDictionaryServiceImpl implements BackDataDictionaryService{
 
 	@Resource
-	private DataDictionaryMapper dataDictionary;
+	private BackDataDictionaryMapper backDataDictionary;
 	
 	@Override
 	public List<DataDictionary> queryFlatFormList() {
-		return dataDictionary.queryFlatFormList();
+		return backDataDictionary.queryFlatFormList();
 	}
 
 }

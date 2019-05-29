@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import cn.appsys.pojo.AppInfo;
 
-public interface AppInfoMapper {
+public interface BackAppInfoMapper {
 	
 	/**
 	 * 根据id修改app信息

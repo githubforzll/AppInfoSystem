@@ -18,29 +18,29 @@ import cn.appsys.pojo.AppCategory;
 import cn.appsys.pojo.AppInfo;
 import cn.appsys.pojo.AppVersion;
 import cn.appsys.pojo.DataDictionary;
-import cn.appsys.service.appCategory.backend.AppCategoryService;
-import cn.appsys.service.appInfo.backend.AppInfoService;
-import cn.appsys.service.appVersion.backend.AppVersionService;
-import cn.appsys.service.dataDictionary.backend.DataDictionaryService;
+import cn.appsys.service.appCategory.backend.BackAppCategoryService;
+import cn.appsys.service.appInfo.backend.BackAppInfoService;
+import cn.appsys.service.appVersion.backend.BackAppVersionService;
+import cn.appsys.service.dataDictionary.backend.BackDataDictionaryService;
 import cn.appsys.tools.Constants;
 import cn.appsys.tools.PageSupport;
 
 @Controller
 @RequestMapping("/backend/app")
-public class AppInfoController {
-	private Logger logeger=Logger.getLogger(AppInfoController.class);
+public class BackAppInfoController {
+	private Logger logeger=Logger.getLogger(BackAppInfoController.class);
 
 	@Resource
-	private AppInfoService appInfoService;
+	private BackAppInfoService backAppInfoService;
 	
 	@Resource
-	private DataDictionaryService dataDictionaryService;
+	private BackDataDictionaryService backDataDictionaryService;
 	
 	@Resource
-	private AppCategoryService appCategoryService;
+	private BackAppCategoryService backAppCategoryService;
 	
 	@Resource
-	private AppVersionService appVersionServie;
+	private BackAppVersionService backAppVersionServie;
 	
 	@RequestMapping("/list")
 	public String applist(@RequestParam(value="querySoftwareName",required = false)String querySoftwareName,
@@ -67,7 +67,7 @@ public class AppInfoController {
 			currentPageNo=pageIndex;
 		}
 		
-		int totalCount = appInfoService.getAppInfoCount(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3);
+		int totalCount = backAppInfoService.getAppInfoCount(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3);
 		PageSupport page = new PageSupport();
 		page.setPageSize(Constants.pageSize);  // 每页显示的数据行数
 		page.setCurrentPageNo(currentPageNo);     // 当前页码
@@ -75,13 +75,13 @@ public class AppInfoController {
 		// 3、计算分页SQL中的位置偏移量
 		Integer from = (page.getCurrentPageNo() - 1) * page.getPageSize();
 		// 4、调用分页、按条件查询用户列表方法
-		List<AppInfo> appInfoList = appInfoService.getAppInfoList(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, from, page.getPageSize());
+		List<AppInfo> appInfoList = backAppInfoService.getAppInfoList(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, from, page.getPageSize());
 		logeger.info("appInfoList.size--->>>"+appInfoList.size());
-		List<AppCategory> categoryLevel1List =appCategoryService.queryCategories(null);
+		List<AppCategory> categoryLevel1List =backAppCategoryService.queryCategories(null);
 		logeger.info("categoryLevel1List.size--->>>"+categoryLevel1List.size());
 		List<AppCategory> categoryLevel2List =null;
 		List<AppCategory> categoryLevel3List =null;
-		List<DataDictionary> flatFormList =dataDictionaryService.queryFlatFormList();
+		List<DataDictionary> flatFormList =backDataDictionaryService.queryFlatFormList();
 		
 		// 6、将相关数据保存到Model对象中，用于在页面上进行显示
 		model.addAttribute("softwareName", querySoftwareName);
@@ -107,7 +107,7 @@ public class AppInfoController {
 	@RequestMapping(value="/categorylevellist.json",method=RequestMethod.GET)
 	@ResponseBody
 	public Object categoryLevelList(@RequestParam(value="pid",required=false)Integer pid){
-		List<AppCategory> list = appCategoryService.queryCategories(pid);
+		List<AppCategory> list = backAppCategoryService.queryCategories(pid);
 		return JSONArray.toJSONString(list);
 	}
 	
@@ -123,8 +123,8 @@ public class AppInfoController {
 			            @RequestParam(value="aid",required=false)Integer appinfoid,
 			            Model model){
 		logeger.info("versionid--->>>"+versionid+"\nappinfoid--->>>"+appinfoid);
-		AppInfo appInfo = appInfoService.getAppInfoIdView(appinfoid);
-		AppVersion appVersion = appVersionServie.getVersionByView(versionid);
+		AppInfo appInfo = backAppInfoService.getAppInfoIdView(appinfoid);
+		AppVersion appVersion = backAppVersionServie.getVersionByView(versionid);
 		model.addAttribute("appInfo",appInfo);
 		model.addAttribute("appVersion", appVersion);
 		return "backend/appcheck";
@@ -140,9 +140,9 @@ public class AppInfoController {
 							@RequestParam(value="status",required=false)Integer status){
 		logeger.info("status====================>>>>>"+status);
 		logeger.info("id====================>>>>>"+id);
-		AppInfo appInfo=appInfoService.getAppInfoIdView(id);
+		AppInfo appInfo=backAppInfoService.getAppInfoIdView(id);
 		appInfo.setStatus(status);
-		boolean result_modAppInfo=appInfoService.modifyAppInfoById(appInfo);
+		boolean result_modAppInfo=backAppInfoService.modifyAppInfoById(appInfo);
 		logeger.info("--->>>"+result_modAppInfo);
 		return "redirect:/backend/app/list";
 	}

@@ -7,19 +7,21 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.appsys.dao.appCategory.backend.AppCategoryMapper;
+import cn.appsys.dao.appCategory.backend.BackAppCategoryMapper;
 import cn.appsys.pojo.AppCategory;
 
 @Transactional
-@Service("appCategoryService")
-public class AppCategoryServiceImpl implements AppCategoryService{
+@Service("backAppCategoryService")
+public class BackAppCategoryServiceImpl implements BackAppCategoryService{
 	
+	/*@Resource
+	private AppCategoryMapper appCategoryMapper;*/
 	@Resource
-	private AppCategoryMapper appCategoryMapper;
+	private BackAppCategoryMapper backAppCategoryMapper;
 
 	@Override
 	public List<AppCategory> queryCategories(Integer parentId) {
-		return appCategoryMapper.queryCategories(parentId);
+		return backAppCategoryMapper.queryCategories(parentId);
 	}
 
 }

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import cn.appsys.pojo.AppCategory;
 
 
-public interface AppCategoryMapper {
+public interface BackAppCategoryMapper {
 	
 	/**
 	 * 查询父级分类

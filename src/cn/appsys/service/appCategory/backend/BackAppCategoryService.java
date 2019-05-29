@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import cn.appsys.pojo.AppCategory;
 
-public interface AppCategoryService {
+public interface BackAppCategoryService {
 	/**
 	 * 查询父级分类
 	 * @param parentId

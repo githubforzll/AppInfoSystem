@@ -1,6 +1,10 @@
 package cn.appsys.controller.backend;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -39,8 +43,8 @@ public class BackendUserController {
 	}
 	
 	@RequestMapping("/logout")
-	public String close(){
-		
-		return "backendlogin";
+	public void close(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		response.sendRedirect(request.getContextPath()+"/index.jsp");//重定向到欢迎页(首页)
+		request.getSession().invalidate();//使session失效
 	}
 }

@@ -13,6 +13,9 @@ import cn.appsys.pojo.AppCategory;
 @Transactional
 @Service("appCategoryService")
 public class AppCategoryServiceImpl implements AppCategoryService {
+	/*@Resource
+	private AppCategoryMapper appCategoryMapper;*/
+	
 	@Resource
 	private AppCategoryMapper appCategoryMapper;
 

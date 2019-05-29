@@ -100,7 +100,7 @@
 	<!-- 装配自定义的系统拦截器SysInterceptor -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/dev"/>
+			<mvc:mapping path="/dev/flatform/app/**"/>
 			<bean class="cn.appsys.interceptor.SysInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
